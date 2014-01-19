@@ -1,10 +1,22 @@
 <h1>Welcome to Blackjack!</h1>
+
 <p>Hi, <%= session[:firstname] %><br></p>
+<% if @play_again %>
+  <p>
+    <strong>Play Again?</strong>
+    <a href='/game' class='btn btn-primary'>Yes</a>
+    <a href='/game_over' class='btn'> No</a>
+  </p>
+<% end %>
 
 <div class='well'>
   <h6>Dealer's Cards:</h6><br>
-    <% session[:dealercards].each do |card| %>
-      <%= card_image(card) %>
+    <% session[:dealercards].each_with_index do |card, i| %>
+      <%if session[:turn] != "dealer" && i == 0 %>
+       <img src='/images/cards/cover.jpg' class='card_image'>  
+      <% else %>
+       <%= card_image(card) %>
+      <% end %>
     <% end %>
   
     <% if @show_dealer_hit_button %>
