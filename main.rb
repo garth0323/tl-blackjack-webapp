@@ -67,15 +67,14 @@ get '/' do
 end
 
 get '/new_user' do
+  erb :new_user
+end
+
+post '/player_name' do
   if params[:firstname].empty?
     @error = "Name is required"
     halt erb(:new_user)
   end
-  erb :new_user
-  
-end
-
-post '/player_name' do
   session[:firstname] = params[:firstname]
   redirect '/game'
 end
