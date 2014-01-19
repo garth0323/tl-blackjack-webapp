@@ -124,7 +124,7 @@ end
 get '/game/dealer' do
   @show_or_hit_buttons = false
   
-  dealer_total = calculate_total(session[:dealer_cards])
+  dealer_total = calculate_total(session[:dealercards])
   if dealer_total == 21
     @error = "Sorry, dealer hit blackjack!"
   elsif dealer_total > 21
@@ -133,6 +133,28 @@ get '/game/dealer' do
     redirect '/game/compare'
   else
     @show_dealer_hit_button = true
+  end
+  
+  erb :game
+end
+      
+post '/game/dealer/hit' do
+  session[:dealercards] << session[:deck].pop
+  redirect '/game/dealer'
+end
+      
+get '/game/compare' do
+  @show_or_hit_buttons = false
+  
+  player_total = calculate_total(session[:playercards])
+  dealer_total = calculate_total(session[:dealercards])
+  
+  if dealer_total > player_total
+    @error = "Sorry, dealer wins."
+  elsif player_total > dealer_total
+    @success = "Congratulations, you win!"
+  else
+    @error = "The worst, a push"
   end
   
   erb :game
