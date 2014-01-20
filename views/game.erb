@@ -35,11 +35,11 @@
   <% end %>
 </div>
 <p>
-What would you like to do?
 <%= session[:firstname] %> has <%= calculate_total(session[:playercards]) %>.
 
 
 <% if @hit_or_stay_buttons %>
+ What would you like to do?
   <form id="hit_form" action="/game/player/hit" method='post'>
     <input type='submit' class='btn btn-success' value='Hit' />
   </form>
@@ -47,5 +47,6 @@ What would you like to do?
   <form id="stay_form" action="/game/player/stay" method='post'>
     <input type='submit' class='btn btn-warning' value='Stay' />
   </form>
+ 
 <% end %>
 </p>

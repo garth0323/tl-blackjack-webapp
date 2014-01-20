@@ -1,0 +1,44 @@
+What is HTML? What is CSS? What is Javascript?
+HTML is the language that browsers read to render a web page. CSS handles much of the formatting
+of this page. Javascript handles interactive parts of the web page.
+
+What are the major parts of an HTTP request?
+Verb, URL, parameters.
+
+What are the major parts of an HTTP response?
+status code
+
+How do you submit an HTTP POST request, with a "username" attribute set to "bob"?
+<form action='/player_name' method='post'>
+  First name: <input type="text" name='bob'><br>
+<input type="submit" value="Submit">
+
+What if we wanted a GET request instead?
+By using the URL
+
+
+Why is it important for us, as web developers, to understand that HTTP is a "stateless" protocol?
+So that we can make it seem like there is a state for the user.
+
+If the internet is just HTTP requests/responses, why do we only use browsers to interface with web applications?Are there any other options?
+Websites and apps use it, other options are expensive such as FTP, SMTP,TFTP, SFTP, NNTP
+
+What is MVC, and why is it important?
+Model View Controller is foundation on which many apps are built including rails apps.
+
+The below questions are about Sinatra:
+
+At a high level, how are requests processed?
+through the HTTP protocol.
+
+In the controller/action, what's the difference between rendering and redirecting?
+rendering shows a view and redirecting can show a view but can do other things as well, with the data.
+
+In the ERB view template, how do you show dynamic content?
+Using an instance variable
+
+Given what you know about ERB templates, when do you suppose the ERB template is turned into HTML?
+before the browser sees it.
+
+What's the role of instance variables in Sinatra?
+serve dynamic content, manage data.
