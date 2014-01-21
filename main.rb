@@ -140,7 +140,7 @@ end
       
 get '/game/dealer' do
   session[:turn] = "dealer"
-  @show_or_hit_buttons = false
+  @hit_or_stay_buttons = false
   
   dealer_total = calculate_total(session[:dealercards])
   if dealer_total == 21
