@@ -1,10 +1,10 @@
 <h1>Welcome to Blackjack!</h1>
 
-<p>Hi, <%= session[:firstname] %><br></p>
+<p><%= session[:firstname] %> bet $<%= session[:player_bet] %> and has $<%= session[:player_pot] %> total.<br></p>
 <% if @play_again %>
   <p>
     <strong>Play Again?</strong>
-    <a href='/game' class='btn btn-primary'>Yes</a>
+    <a href='/bet' class='btn btn-primary'>Yes</a>
     <a href='/game_over' class='btn'> No</a>
   </p>
 <% end %>
@@ -36,7 +36,8 @@
 </div>
 <p>
 <%= session[:firstname] %> has <%= calculate_total(session[:playercards]) %>.
-
+  <%= session[:firstname] %> bet $<%= session[:player_bet] %> and has $<%= session[:player_pot] %> total.
+</p>
 
 <% if @hit_or_stay_buttons %>
  What would you like to do?
@@ -49,4 +50,4 @@
   </form>
  
 <% end %>
-</p>
+

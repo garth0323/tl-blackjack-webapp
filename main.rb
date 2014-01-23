@@ -55,12 +55,14 @@ helpers do
   def winner!(msg)
     @play_again = true
     @success = "<strong>#{session[:firstname]} has won!</strong> #{msg}"
+    session[:player_pot] = session[:player_pot] + session[:player_bet]
     @hit_or_stay_buttons = false
   end
         
   def loser!(msg)
     @play_again = true
     @error = "<strong>#{session[:firstname]} has lost.</strong> #{msg}"
+    session[:player_pot] = session[:player_pot] - session[:player_bet]
     @hit_or_stay_buttons = false
   end
       
@@ -76,15 +78,25 @@ before do
 end
 
 get '/' do
-  if session[:firstname]
-    erb :game
-  else
-    redirect :'/new_user'
-  end
+  redirect :'/new_user'
 end
 
 get '/new_user' do
+  session[:player_pot] = 500
   erb :new_user
+end
+  
+post '/bet' do
+  if params[:bet_amount].nil? || params[:bet_amount].to_i == 0
+    @error = 'Must make a bet'
+    halt erb(:bet)
+  elsif params[:bet_amount].to_i > session[:player_pot]
+    @error = 'Cannot bet more than you have.'
+    halt erb(:bet)
+  else
+    session[:player_bet] = params[:bet_amount].to_i
+    redirect '/game'
+  end
 end
 
 post '/player_name' do
@@ -93,7 +105,12 @@ post '/player_name' do
     halt erb(:new_user)
   end
   session[:firstname] = params[:firstname]
-  redirect '/game'
+  redirect '/bet'
+end
+        
+get '/bet' do
+  session[:player_bet] = nil
+  erb :bet
 end
 
 get '/game' do
