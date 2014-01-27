@@ -1,6 +1,7 @@
 $(document).ready(function() {
   player_hits();
   player_stays();
+  dealer_hit();
 } );
 
 function player_hits() {
@@ -25,6 +26,21 @@ function player_stays() {
     $.ajax({
       type: "POST",
       url: "/game/player/stay"
+    }).done(function(msg) {
+      $("#game").replaceWith(msg)
+    });
+    
+    return false;
+   } );
+}
+
+function dealer_hit() {
+  $(document).on("click", "form#dealer_hit input", function() {
+    alert("dealer hits!");
+    
+    $.ajax({
+      type: "POST",
+      url: "/game/dealer/hit"
     }).done(function(msg) {
       $("#game").replaceWith(msg)
     });

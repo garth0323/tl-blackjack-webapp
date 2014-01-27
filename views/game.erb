@@ -30,7 +30,7 @@
       <% if @show_dealer_hit_button %>
         <p>
           <h5>Dealer has <%= calculate_total(session[:dealercards]) %> and will hit.</h5>
-          <form action='/game/dealer/hit' method='post'>
+          <form id="dealer_hit" action='/game/dealer/hit' method='post'>
             <input type='submit' class='btn btn-primary' value="Click to see dealer's next card &rarr;" >
           </form>
         </p>
@@ -47,7 +47,6 @@
   </p>
   
   <% if @hit_or_stay_buttons %>
-   What would you like to do?
     <form id="hit_form" action="/game/player/hit" method='post'>
       <input type='submit' class='btn btn-success' value='Hit' />
     </form>
