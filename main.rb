@@ -8,6 +8,8 @@ end
 
 set :sessions, true
 
+FIRST_PLAYER_POT = 500
+
 helpers do
   def calculate_total(cards) 
     arr = cards.map{|e| e[1] }
@@ -54,21 +56,21 @@ helpers do
   
   def winner!(msg)
     @play_again = true
-    @success = "<strong>#{session[:firstname]} has won!</strong> #{msg}"
+    @winner = "<strong>#{session[:firstname]} has won!</strong> #{msg}"
     session[:player_pot] = session[:player_pot] + session[:player_bet]
     @hit_or_stay_buttons = false
   end
         
   def loser!(msg)
     @play_again = true
-    @error = "<strong>#{session[:firstname]} has lost.</strong> #{msg}"
+    @loser = "<strong>#{session[:firstname]} has lost.</strong> #{msg}"
     session[:player_pot] = session[:player_pot] - session[:player_bet]
     @hit_or_stay_buttons = false
   end
       
   def tie!(msg)
     @play_again = true
-    @success = "<strong>It's a tie!</strong> #{msg}"
+    @winner = "<strong>It's a tie!</strong> #{msg}"
     @hit_or_stay_buttons = false
   end
 end
@@ -82,8 +84,13 @@ get '/' do
 end
 
 get '/new_user' do
-  session[:player_pot] = 500
+  session[:player_pot] = FIRST_PLAYER_POT
   erb :new_user
+end
+        
+get '/bet' do
+  session[:player_bet] = nil
+  erb :bet
 end
   
 post '/bet' do
@@ -106,11 +113,6 @@ post '/player_name' do
   end
   session[:firstname] = params[:firstname]
   redirect '/bet'
-end
-        
-get '/bet' do
-  session[:player_bet] = nil
-  erb :bet
 end
 
 get '/game' do
@@ -142,7 +144,7 @@ post '/game/player/hit' do
   session[:playertotal] = calculate_total(session[:playercards])
   session[:dealertotal] = calculate_total(session[:dealercards])
   
-  erb :game
+  erb :game, layout: false
 end
 
 post '/game/player/stay' do
@@ -170,7 +172,7 @@ get '/game/dealer' do
     @show_dealer_hit_button = true
   end
   
-  erb :game
+  erb :game, layout: false
 end
       
 post '/game/dealer/hit' do
